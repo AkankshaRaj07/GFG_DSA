@@ -1,0 +1,44 @@
+/* A Binary Tree node
+class Node
+{
+    int data;
+    Node left, right;
+
+    Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}
+*/
+//import java.util.Queue;
+class Solution {
+    boolean check(Node root) {
+        Queue <Node> queue = new LinkedList<>();
+        int currLevel=0;
+        int oldLevel=0;
+        queue.offer(root);
+        int level = 1;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i=0; i<size; i++){
+                Node node = queue.poll();
+                if(isLeaf(node))  {
+                    oldLevel =currLevel;
+                    currLevel = level;
+                    if(oldLevel != 0 && currLevel != oldLevel) return false;
+                }
+                if(node.left!= null) queue.offer(node.left);
+                if(node.right != null) queue.offer(node.right);
+                
+            }
+            level++;
+        }
+        return true;
+    }
+    
+    boolean isLeaf(Node node){
+        if(node.left == null && node.right == null && node != null) return true;
+        return false;
+    }
+}
